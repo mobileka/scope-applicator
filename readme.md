@@ -6,6 +6,25 @@ Scope Applicator is a PHP trait that makes data filtering and sorting easy.
 
 It can be used with Laravel, Symfony and any other PHP (5.4 and newer) application.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Theory](#theory)
+- [Usage](#usage)
+- [Scope configuration options](#scope-configuration-options)
+- [How to use without repositories](#how-to-use-without-repositories)
+- [How to use Scope Applicator with other frameworks](#how-to-use-scope-applicator-with-other-frameworks)
+- [Other ways to use this trait](#other-ways-to-use-this-trait)
+- [Future plans](#future-plans)
+- [Credits](#credits)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ### Introduction
 
 In every single project we have pages where we list data. In most cases we need to implement some kind of filtering functionality there.
