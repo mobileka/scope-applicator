@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/mobileka/scope-applicator.svg)](https://travis-ci.org/mobileka/scope-applicator)
+[![Code Climate](https://codeclimate.com/github/mobileka/scope-applicator.png)](https://codeclimate.com/github/mobileka/scope-applicator)
+[![Coverage Status](https://coveralls.io/repos/mobileka/scope-applicator/badge.png?branch=master)](https://coveralls.io/r/mobileka/scope-applicator?branch=master)
+
 Scope Applicator is a PHP trait that makes data filtering and sorting easy.
 
 It can be used with Laravel, Symfony and any other PHP (5.4 and newer) application.
