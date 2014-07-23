@@ -8,7 +8,7 @@ It can be used with Laravel, Symfony and any other PHP (5.4 and newer) applicati
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+**Table of Contents**
 
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -353,7 +353,7 @@ class Post extends Model
 > Note that custom model methods as above **can't** be mixed with scopes. Thus, make sure to use a consistent way of defining these methods.
 
 
-### Future plans
+### Feuture plans
 
 Two more scope configuration options should be implemented:
 
