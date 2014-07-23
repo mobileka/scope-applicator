@@ -228,7 +228,7 @@ public $scopes = [
 
 ### How to use without repositories
 
-I don't recommend doing this but if you don't want to use repositories, you can attach the trait directrly to your model.
+I don't recommend doing this but if you don't want to use repositories, you can attach the trait directly to your model.
 
 In this case you should create a BaseModel which implements the `getInputManager` abstract method of the `ScopeApplicator` trait. It is still easy in Laravel:
 
@@ -293,7 +293,7 @@ There are several steps to make this trait usable:
 
 1) First of all, read the documentation I provided for Laravel. All frameworks are almost identical in terms of usage.
 
-2) Create a class which has a `get` method accepting two arguments: `key` and `default`. This class should return HTTP Request parameters by `key` and if there is no `key` found, return the `default` value. In other words, you need to create a class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. Let us call this class "InputManager" in the fuature.
+2) Create a class which has a `get` method accepting two arguments: `key` and `default`. This class should return HTTP Request parameters by `key` and if there is no `key` found, return the `default` value. In other words, you need to create a class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. Let us call this class "InputManager" in the future.
 
 3) You need to `use` the `\Mobileka\ScopeApplicator\ScopeApplicator` trait in a class which handles database queries. In other words, this class should be called from a controller. This is going to take a role of the "Repository" which is discussed in Laravel-related documentation chapters.
 
@@ -350,10 +350,10 @@ class Post extends Model
 }
 ```
 
-> Note that custom model methods as above **can't** be mixed with scopes. Thus, make sure to use a consistent way of defining these methods.
+> Note that custom model methods as above **can't** be mixed with scopes. Therefore, make sure to use a consistent way of defining these methods.
 
 
-### Feuture plans
+### Future plans
 
 Two more scope configuration options should be implemented:
 
