@@ -271,9 +271,13 @@ Wrong and ugly! Don't be lazy and use [repositories](http://blog.armen.im/larave
 The Scope Applicator is not tested with other frameworks but I am pretty sure that it can be used with almost any PHP project.
 
 There are several steps to make this trait usable:
+
 1) First of all, read the documentation I provided for Laravel. All frameworks are almost identical in terms of usage.
+
 2) Create a class which has a `get` method accepting two arguments: `key` and `default`. This class should return HTTP Request parameters by `key` and if there is no `key` found, return the `default` value. In other words, you need to create a class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. Let us call this class "InputManager" in the fuature.
+
 3) You need to `use` the `\Mobileka\ScopeApplicator\ScopeApplicator` trait in a class which handles database queries. In other words, this class should be called from a controller. This is going to take a role of the "Repository" which is discussed in Laravel-related documentation chapters.
+
 4) The `Mobileka\ScopeApplicator\ScopeApplicator` has the `getInputManager` abstract method. You need to override it and return an instance of the InputManager we discussed before. 
 
 The rest is identical to Laravel. If it is still not clear, read the next chapter and try to analyze tests of the package.
