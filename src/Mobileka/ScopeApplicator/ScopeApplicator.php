@@ -155,7 +155,7 @@ trait ScopeApplicator
     {
         if (is_string($type)) {
             if (in_array($type, ['bool', 'boolean'])) {
-                $variable = in_array($variable, ['1', 'true']) ? true : false;
+                $variable = in_array($variable, [1, '1', true, 'true'], true);
             } else {
                 settype($variable, $type);
             }
