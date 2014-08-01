@@ -1,15 +1,15 @@
-<?php namespace Mobileka\ScopeApplicator\InputManagers;
+<?php namespace Mobileka\ScopeApplicator\Laravel;
 
-use Illuminate\Http\Request as InputManager;
+use Illuminate\Http\Request;
 use Mobileka\ScopeApplicator\InputManagerInterface;
 
-class LaravelInputManager implements InputManagerInterface
+class InputManager implements InputManagerInterface
 {
     public $inputManager;
 
     public function __construct()
     {
-        $this->inputManager = InputManager::createFromGlobals();
+        $this->inputManager = Request::createFromGlobals();
     }
 
     public function get($key = null, $default = null)

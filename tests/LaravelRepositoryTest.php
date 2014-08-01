@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @covers Mobileka\ScopeApplicator\Repositories\LaravelRepository
+ * @covers Mobileka\ScopeApplicator\Laravel\Repository
  */
 class LaravelRepositoryTest extends BaseTestCase
 {
     /**
-     * @covers Mobileka\ScopeApplicator\Repositories\LaravelRepository::getInputManager
+     * @covers Mobileka\ScopeApplicator\Laravel\Repository::getInputManager
      */
     public function test_returns_input_manager_instance()
     {

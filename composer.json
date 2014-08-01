@@ -15,6 +15,7 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
+        "illuminate/database": "4.2.*",
         "mobileka/mosaiq-helpers": "dev-master"
     },
     "require-dev": {

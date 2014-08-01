@@ -1,7 +1,7 @@
 <?php namespace Stubs;
 
-use Mobileka\ScopeApplicator\Repositories\LaravelRepository;
+use Mobileka\ScopeApplicator\Laravel\Repository;
 
-class RealRepository extends LaravelRepository
+class RealRepository extends Repository
 {
 }

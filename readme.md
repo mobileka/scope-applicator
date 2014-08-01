@@ -43,7 +43,7 @@ Scope Applicatior makes this easy because in several simple steps you'll get som
 
 Add `mobileka/scope-applicator` to your project dependencies with composer:
 
-`composer require mobileka/scope-applicator 1.*`
+`composer require mobileka/scope-applicator dev-master`
 
 ### Theory
 Scope Applicator adds `applyScope` method to any class it is attached to.
@@ -52,7 +52,7 @@ As a first argument this method receives an instance of a class (typically, a mo
 
 The second argument is an array of allowed scopes.
 
-This method always returns an instance provided as a first argument, so you can call other methods of it.
+This method always returns an instance provided as a first argument, so you can call other methods on it.
 
 ### Usage
 
@@ -62,7 +62,7 @@ The first example will be for Laravel framework, because Scope Applicator contai
 
 > You should also be familiar with [query scopes](http://laravel.com/docs/eloquent#query-scopes) in Laravel.
 
-The easiest way to use Scope Applicator is to create a repository which extends `Mobileka\ScopeApplicator\Repositories\LaravelRepository` class.
+The easiest way to use Scope Applicator is to create a repository which extends `Mobileka\ScopeApplicator\Laravel\Repository` class.
 
 The trait is already attached to it, so you can use it right from the box:
 
@@ -70,7 +70,7 @@ The trait is already attached to it, so you can use it right from the box:
 <?php namespace Acme\Repositories;
 
 use Acme\Models\Post;
-use Mobileka\ScopeApplicator\Repositories\LaravelRepository as BaseRepository;
+use Mobileka\ScopeApplicator\Laravel\Repository as BaseRepository;
 
 class EloquentPostRepository extends BaseRepository implements PostRepositoryInterface
 {
@@ -168,9 +168,9 @@ That's it! Now you can filter and sort your posts as you want with a simple chan
 
 As mentioned above, we need to configure scopes for every single controller.
 
-These are all possible configuration values:
+These are all possible configuration options:
 
-* `alias` - Sometimes we don't want our users to see the actual scope name. Alias is a key that maps a url parameter to a scope name.
+* `alias` - sometimes we don't want our users to see the actual scope name. Alias is a key that maps a url parameter to a scope name.
 
 Example:
 
@@ -235,7 +235,7 @@ In this case you should create a BaseModel which implements the `getInputManager
 ```php
 <?php namespace Acme\Models;
 
-use Mobileka\ScopeApplicator\InputManagers\LaravelInputManager;
+use Mobileka\ScopeApplicator\Laravel\InputManager;
 
 abstract class BaseModel extends \Eloquent {
 	use \Mobileka\ScopeApplicator\ScopeApplicator;
