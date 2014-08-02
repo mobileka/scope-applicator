@@ -29,5 +29,5 @@
             "Mobileka\\ScopeApplicator\\": "src/Mobileka/ScopeApplicator"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
