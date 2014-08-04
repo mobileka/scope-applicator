@@ -45,8 +45,13 @@ Add `mobileka/scope-applicator` to your project dependencies with composer:
 
 `composer require mobileka/scope-applicator dev-master`
 
+If `minimum-stability` of your project is set to `stable` (or not set), you should also add this line to `require` section of your `composer.json`:
+
+`"mobileka/mosaiq-helpers": "@dev"`
+
 ### Theory
-Scope Applicator adds `applyScope` method to any class it is attached to.
+
+Scope Applicator trait adds `applyScope` method to any class it is attached to.
 
 As a first argument this method receives an instance of a class (typically, a model or a repository) which contains scope implementations.
 
@@ -374,11 +379,3 @@ If you have noticed a bug or have suggestions, you can always create an issue. W
 ### License
 
 Scope Applicator is an open-source library and licensed under the [MIT License](https://github.com/mobileka/scope-applicator/blob/master/license).
-
-
-
-
-
-
-
-
