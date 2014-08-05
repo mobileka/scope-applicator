@@ -233,26 +233,11 @@ public $scopes = [
 
 ### How to use without repositories
 
-I don't recommend doing this but if you don't want to use repositories, you can attach the trait directly to your model.
+If you don't want to use repositories, you can attach the trait directly to your model.
+To make this even easier, I created a base model for Laravel which already has everything you need.
 
-In this case you should create a BaseModel which implements the `getInputManager` abstract method of the `ScopeApplicator` trait. It is still easy in Laravel:
-
-```php
-<?php namespace Acme\Models;
-
-use Mobileka\ScopeApplicator\Laravel\InputManager;
-
-abstract class BaseModel extends \Eloquent {
-	use \Mobileka\ScopeApplicator\ScopeApplicator;
-
-    public function getInputManager()
-    {
-        return new LaravelInputManager;
-    }
-}
-```
-
-Of course, your models should now extend this class and the controller will look something like this:
+Just exetend `Mobileka\ScopeApplicator\Laravel\Model` and you are ready to go.
+This allows you to call a static `handleScopes` method on your model and pass a configuration array as the only parameter:
 
 ```php
 <?php namespace Acme\Controllers;
@@ -277,18 +262,13 @@ class PostController extends BaseController
         ]
     ];
 
-    public function __construct()
-    {
-        $this->model = new Post;
-    }
-
     public function index()
     {
-        return $this->model->applyScopes($this->model, $this->scopes)->get();
+        return Post::handleScopes($this->scopes)->get();
     }
 }
 ```
-Wrong and ugly! Don't be lazy and use [repositories](http://blog.armen.im/laravel-and-repository-pattern/) instead :)
+But don't be lazy and use [repositories](http://blog.armen.im/laravel-and-repository-pattern/) instead :)
 
 ### How to use Scope Applicator with other frameworks
 
@@ -312,51 +292,6 @@ As described above, the main usage scenario of the Scope Applicatior is... well.
 But, as experienced developers have already guessed, this trait just parses the url parameters and calls methods of the class which is provided as the first argument of the `applyScopes` method. In fact, it is possible to change the way it behaves: for example, it can call methods returned by a database query or an API call.
 
 To do this, you just need to override the `getInputManager` method of the `Mobileka\ScopeApplicator\ScopeApplicator` trait and return an instance of a custom class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. An example of a such class is `Mobileka\ScopeApplicator\InputManagers\LaravelInputManager`.
-
-You can also avoid using scopes if, for some reason, you don't like them. This model will work fine too:
-
-```php
-<?php namespace Acme\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Post extends Model
-{
-    public function popular()
-    {
-        return $this->where('votes', '>', 5);
-    }
-
-    public function votes($votes)
-    {
-        return $this->whereVotes($votes);
-    }
-
-    public function new()
-    {
-        return $this->whereNew(1);
-    }
-
-    public function old()
-    {
-        return $this->whereNew(0);
-    }
-
-    public function contains($phrase)
-    {
-        return $this->where('title', 'like', "%{$phrase}%")
-            ->orWhere('content', 'like', "%{$phrase}%");
-    }
-
-    public function orderByTitle($direction = 'asc')
-    {
-        return $this->orderBy('title', $direction);
-    }
-}
-```
-
-> Note that custom model methods as above **can't** be mixed with scopes. Therefore, make sure to use a consistent way of defining these methods.
-
 
 ### Future plans
 
