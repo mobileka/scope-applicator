@@ -246,7 +246,7 @@ public $scopes = [
 ];
 ```
 
-`posts?search` - the `constains` scope will be called with `''` (empty string) as an argument. If `allowEmpty` is set to `false`, "Missing argument" exception will be thrown. 
+`posts?search` - the `contains` scope will be called with `''` (empty string) as an argument. If `allowEmpty` is set to `false`, "Missing argument" exception will be thrown. 
 
 ### How to use without repositories
 
