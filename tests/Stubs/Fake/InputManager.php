@@ -6,14 +6,25 @@ class InputManager implements InputManagerInterface
 {
     public function get($key = null, $default = null)
     {
-        if ($key === 'one') {
-            return $key;
-        }
+        switch ($key) {
+            case 'one':
+                return $key;
 
-        if ($key === 'six') {
-            return null;
-        }
+            case 'six':
+                return null;
 
-        return (in_array($key, ['one:default', 'five', 'six:default'])) ? '' : $default;
+            case 'between':
+                return ['min' => 2, 'max' => 6];
+
+            case 'between:empty':
+                return ['min' => '', 'max' => 5];
+
+            case 'five':
+            case 'six:default':
+                return '';
+
+            default:
+                return $default;
+        }
     }
 }

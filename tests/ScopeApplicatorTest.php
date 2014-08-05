@@ -33,6 +33,28 @@ class ScopeApplicatorTest extends BaseTestCase
         // a normal scope with a single mandatory argument. See Stubs\Fake\DataProvider::one
         assertSame($data['one'], $repository->getFakeData(['one']));
 
+        // a scope with two arguments
+        assertSame(
+            array_slice($data, 1, null, true),
+            $repository->getFakeData([
+                'between' => [
+                    'keys' => ['min', 'max']
+                ]
+            ])
+        );
+
+        // a scope with two arguments with allowed empty values
+        assertSame(
+            array_slice($data, 0, -1, true),
+            $repository->getFakeData([
+                'between' => [
+                    'alias' => 'between:empty',
+                    'keys' => ['min', 'max'],
+                    'allowEmpty' => true
+                ]
+            ])
+        );
+
         // a scope with no arguments. See Stubs\Fake\DataProvider::five
         assertSame($data['five'], $repository->getFakeData(['five']));
 

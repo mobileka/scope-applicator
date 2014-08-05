@@ -120,7 +120,7 @@ trait ScopeApplicator
             return $default ? [$default] : null;
         }
 
-        // If "keys" configuration key is provided, we are dealing with an array parameter (e.g. <input name="somename[unsing_me]">)
+        // If "keys" configuration key is provided, we are dealing with an array parameter (e.g. <input name="somename[somekey]">)
         $keys = $scope->getItem('keys');
 
         // If "keys" are empty, we need to perform some DRY actions
@@ -132,10 +132,9 @@ trait ScopeApplicator
         foreach ((array) $keys as $key) {
             $arg = $this->setType($value[$key], $type);
 
-            // Empty arguments should not be added to allow default scope argument values.
-            // This can be a problem when we need argument value to be an empty string,
-            // but I've chosen the lesser of two evils, I believe
-            if ($arg !== '') {
+            // Empty arguments are not allowed by default to allow default scope argument values
+            // Set allowEmpty option to true if you want to change this behavior
+            if ($arg !== '' or $scope->getItem('allowEmpty')) {
                 $result[] = $arg;
             }
         }
@@ -145,7 +144,6 @@ trait ScopeApplicator
 
     /**
      * Convert a provided variable to a provided type
-     * Do nothing if $type is not a string
      *
      * @param  mixed       $variable
      * @param  string|null $type
@@ -153,8 +151,11 @@ trait ScopeApplicator
      */
     protected function setType($variable, $type)
     {
+        // Do nothing if $type is not a string
         if (is_string($type)) {
             if (in_array($type, ['bool', 'boolean'])) {
+                // Only 1, '1', true and 'true' values will be converted to boolean true
+                // Any other value will be converted to boolean false
                 $variable = in_array($variable, [1, '1', true, 'true'], true);
             } else {
                 settype($variable, $type);

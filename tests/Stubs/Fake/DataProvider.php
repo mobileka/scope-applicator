@@ -18,8 +18,8 @@ class DataProvider
     /**
      * A scope with an argument
      *
-     * @param  string $one
-     * @return array
+     * @param  string             $one
+     * @return Current_Class_Name
      */
     public function one($one)
     {
@@ -31,7 +31,7 @@ class DataProvider
     /**
      * A scope without arguments
      *
-     * @return array
+     * @return Current_Class_Name
      */
     public function five()
     {
@@ -43,8 +43,8 @@ class DataProvider
     /**
      * A scope with an optional argument
      *
-     * @param  string $six
-     * @return array
+     * @param  string             $six
+     * @return Current_Class_Name
      */
     public function six($six = 'six')
     {
@@ -53,13 +53,23 @@ class DataProvider
         return $this;
     }
 
+    /**
+     * A scope with two arguments
+     *
+     * @param  mixed              $min
+     * @param  mixed              $max
+     * @return Current_Class_Name
+     */
     public function between($min, $max)
     {
         $result = [];
 
         foreach ($this->data as $key => $value) {
-            if ($value['val'] >= $min and $value['val'] <= $max) {
-                $result[$key] = ['val' => $value];
+            $greaterThanMin = $value['val'] >= $min or $min === '';
+            $lessThanMax = $value['val'] <= $max or $max === '';
+
+            if ($greaterThanMin and $lessThanMax) {
+                $result[$key] = ['val' => $value['val']];
             }
         }
 

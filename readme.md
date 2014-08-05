@@ -231,6 +231,23 @@ public $scopes = [
 
 `posts?created_at[from]=000-00-00&created_at[to]=2014-07-23` - the `createdAt` scope will be called with `'0000-00-00'` as the first argument and `'2014-07-23'` as a second argument
 
+* `allowEmpty` - is used when an empty string should be passed to a scope as an argument. This option is set to `false` by default.
+
+> Please note that when the `allowEmpty` is set to `true`, you won't be able to set a default value for your scope argument, because it will always have a value (when no value is provided, an empty string will be passed instead)
+
+Example:
+
+```php
+public $scopes = [
+    'contains' => [
+        'alias' => 'search',
+        'allowEmpty' => true
+    ]
+];
+```
+
+`posts?search` - the `constains` scope will be called with `''` (empty string) as an argument. If `allowEmpty` is set to `false`, "Missing argument" exception will be thrown. 
+
 ### How to use without repositories
 
 If you don't want to use repositories, you can attach the trait directly to your model.
@@ -297,11 +314,11 @@ To do this, you just need to override the `getInputManager` method of the `Mobil
 
 Two more scope configuration options should be implemented:
 
-1. `allowEmpty` - by default empty parameters (an empty string) are not passed as a scope argument. This is made to allow default scope argument values. This behavior should be possible to change because sometimes a scope can accept an empty string as an argument.
+1. ~~`allowEmpty` - by default empty parameters (an empty string) are not passed as a scope arguments. This is made to allow default scope argument values. This behavior should be possible to change because sometimes a scope can accept an empty string as an argument.~~
 
-2. `in` - this option will filter parameters and make sure that their values are enumerated in `in` array.
+2. `in` - this option will filter parameters and make sure that their values are enumerated in `in` array
 
-I also want to make a video tutorial explaining usage and internals.
+3. Make a video tutorial explaining usage and internals
 
 ### Credits
 
