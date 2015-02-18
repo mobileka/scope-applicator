@@ -175,7 +175,7 @@ As mentioned above, we need to configure scopes for every single controller.
 
 These are all possible configuration options:
 
-* `alias` - sometimes we don't want our users to see the actual scope name. Alias is a key that maps a url parameter to a scope name.
+* `alias` - sometimes we don't want our users see the actual scope name. Alias is a key that maps a url parameter to a scope name.
 
 Example:
 
