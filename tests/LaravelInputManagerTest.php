@@ -6,18 +6,20 @@
 class LaravelInputManagerTest extends BaseTestCase
 {
     /**
+     * @test
      * @covers Mobileka\ScopeApplicator\Laravel\InputManager::__construct
      */
-    public function test_is_instantiable()
+    public function is_instantiable()
     {
         $lim = new Mobileka\ScopeApplicator\Laravel\InputManager;
         assertTrue(method_exists($lim, 'get'), 'LaravelInputManager does not have "get" method');
     }
 
     /**
+     * @test
      * @covers Mobileka\ScopeApplicator\Laravel\InputManager::get
      */
-    public function test_gets_value_from_user_input()
+    public function gets_value_from_user_input()
     {
         $lim = new Mobileka\ScopeApplicator\Laravel\InputManager;
         assertNull($lim->get('param'));

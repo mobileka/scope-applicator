@@ -1,7 +1,7 @@
 <?php namespace Mobileka\ScopeApplicator\Laravel;
 
 use Illuminate\Http\Request;
-use Mobileka\ScopeApplicator\InputManagerInterface;
+use Mobileka\ScopeApplicator\Contracts\InputManagerInterface;
 
 class InputManager implements InputManagerInterface
 {

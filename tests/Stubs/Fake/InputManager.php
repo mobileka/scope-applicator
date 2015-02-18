@@ -1,6 +1,6 @@
 <?php namespace Stubs\Fake;
 
-use Mobileka\ScopeApplicator\InputManagerInterface;
+use Mobileka\ScopeApplicator\Contracts\InputManagerInterface;
 
 class InputManager implements InputManagerInterface
 {

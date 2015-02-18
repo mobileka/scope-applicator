@@ -5,78 +5,165 @@
  */
 class ScopeApplicatorTest extends BaseTestCase
 {
+    /**
+     * @var Stubs\RealRepository
+     */
     protected $realRepository;
-    protected $fixtures;
+
+    /**
+     * @var array
+     */
+    protected $testData = [
+        'one' => ['val' => 1],
+        'five' => ['val' => 5],
+        'six' => ['val' => 6],
+    ];
 
     public function setUp()
     {
         $this->realRepository = new Stubs\RealRepository;
-        $this->fixtures = require __DIR__ . '/Fixtures/fixtures.php';
     }
 
     /**
      * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
      */
-    public function test_applies_scopes()
+    public function applies_a_regular_scope()
     {
-        $data = [
-            'one' => ['val' => 1],
-            'five' => ['val' => 5],
-            'six' => ['val' => 6],
-        ];
+        $expect = $this->testData;
+        $repository = new Stubs\Fake\Repository;
 
-        $repository = new Stubs\Fake\Repository(new Stubs\Fake\InputManager);
+        $result = $repository->getFakeData();
 
-        // no allowed scopes
-        assertSame($data, $repository->getFakeData());
+        assertSame($expect, $result);
+    }
 
-        // a normal scope with a single mandatory argument. See Stubs\Fake\DataProvider::one
-        assertSame($data['one'], $repository->getFakeData(['one']));
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_scope_with_a_single_mandatory_argument()
+    {
+        $expect = $this->testData['one'];
+        $repository = new Stubs\Fake\Repository;
+
+        // a scope with a single mandatory argument. See Stubs\Fake\DataProvider::one
+        $result = $repository->getFakeData(['one']);
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_scope_with_two_arguments()
+    {
+        $expect = array_slice($this->testData, 1, null, true);
+        $repository = new Stubs\Fake\Repository;
 
         // a scope with two arguments
-        assertSame(
-            array_slice($data, 1, null, true),
-            $repository->getFakeData(
-                [
-                    'between' => [
-                        'keys' => ['min', 'max']
-                    ]
+        $result = $repository->getFakeData(
+            [
+                'between' => [
+                    'keys' => ['min', 'max']
                 ]
-            )
+            ]
         );
 
-        // a scope with two arguments with allowed empty values
-        assertSame(
-            array_slice($data, 0, -1, true),
-            $repository->getFakeData(
-                [
-                    'between' => [
-                        'alias' => 'between:empty',
-                        'keys' => ['min', 'max'],
-                        'allowEmpty' => true
-                    ]
-                ]
-            )
-        );
-
-        // a scope with no arguments. See Stubs\Fake\DataProvider::five
-        assertSame($data['five'], $repository->getFakeData(['five']));
-
-        // a scope that does not exist
-        assertSame($data, $repository->getFakeData(['no']));
-
-        // a scope with a default value provided. See Stubs\Fake\DataProvider::six
-        assertSame($data['one'], $repository->getFakeData(['six' => ['default' => 'one']]));
-
-        // a scope with a default argument. See Stubs\Fake\DataProvider::six
-        assertSame($data['six'], $repository->getFakeData(['six' => ['alias' => 'six:default']]));
+        assertSame($expect, $result);
     }
 
     /**
      * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
-     * @expectedException Exception
+     * @test
      */
-    public function test_throws_invalid_input_manager_exception()
+    public function applies_a_scope_with_two_arguments_empty_values_allowed()
+    {
+        $expect = array_slice($this->testData, 0, -1, true);
+        $repository = new Stubs\Fake\Repository;
+
+        // a scope with two arguments with allowed empty values
+        $result = $repository->getFakeData(
+            [
+                'between' => [
+                    'alias' => 'between:empty',
+                    'keys' => ['min', 'max'],
+                    'allowEmpty' => true
+                ]
+            ]
+        );
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_scope_with_no_arguments()
+    {
+        $expect = $this->testData['five'];
+        $repository = new Stubs\Fake\Repository;
+
+        // a scope with no arguments. See Stubs\Fake\DataProvider::five
+        $result = $repository->getFakeData(['five']);
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_non_existent_scope()
+    {
+        $expect = $this->testData;
+        $repository = new Stubs\Fake\Repository;
+
+
+        // a scope that does not exist
+        $result = $repository->getFakeData(['no']);
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_scope_with_a_default_value()
+    {
+        $expect = $this->testData['one'];
+        $repository = new Stubs\Fake\Repository;
+
+        // a scope with a default value provided. See Stubs\Fake\DataProvider::six
+        $result = $repository->getFakeData(['six' => ['default' => 'one']]);
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     */
+    public function applies_a_scope_with_a_default_argument()
+    {
+        $expect = $this->testData['six'];
+        $repository = new Stubs\Fake\Repository;
+
+        // a scope with a default argument. See Stubs\Fake\DataProvider::six
+        $result = $repository->getFakeData(['six' => ['alias' => 'six:default']]);
+
+        assertSame($expect, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @expectedException Mobileka\ScopeApplicator\BadInputManagerException
+     * @test
+     */
+    public function throws_invalid_input_manager_exception()
     {
         $badRepository = new Stubs\BadRepository;
         $badRepository->applyScopes([]);
@@ -84,114 +171,16 @@ class ScopeApplicatorTest extends BaseTestCase
 
     /**
      * @covers Mobileka\ScopeApplicator\ScopeApplicator::validateInputManager
+     * @test
      */
-    public function test_validates_input_manager()
+    public function validates_input_manager()
     {
-        $goodRepository = new Stubs\GoodRepository(Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface'));
+        $goodRepository = new Stubs\GoodRepository(Mockery::mock('Mobileka\ScopeApplicator\Contracts\InputManagerInterface'));
         $badRepository = new Stubs\BadRepository;
 
         assertTrue($this->invokeMethod($this->realRepository, 'validateInputManager'));
         assertTrue($this->invokeMethod($goodRepository, 'validateInputManager'));
         assertFalse($this->invokeMethod($badRepository, 'validateInputManager'));
-    }
-
-    /**
-     * @covers Mobileka\ScopeApplicator\ScopeApplicator::parseScopeConfiguration
-     */
-    public function test_parses_scope_configuration()
-    {
-        $repository = new Stubs\GoodRepository(Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface'));
-
-        foreach ($this->fixtures as $fixture) {
-            assertEquals(
-                $fixture['result'],
-                $this->invokeMethod($repository, 'parseScopeConfiguration', [$fixture['allowedScopes']])
-            );
-        }
-    }
-
-    /**
-     * @covers Mobileka\ScopeApplicator\ScopeApplicator::setType
-     * @expectedException PHPUnit_Framework_Error_Warning
-     */
-    public function test_sets_variable_type()
-    {
-        foreach (['bool', 'string', 'int', 'array', 'null'] as $type) {
-            foreach ([1, true, 'somestring', null] as $variable) {
-                assertInternalType(
-                    $type,
-                    $this->invokeMethod($this->realRepository, 'setType', [$variable, $type]),
-                    "Impossible to convert $variable to $type type"
-                );
-            }
-        }
-
-        // should issue a warning
-        $this->invokeMethod($this->realRepository, 'setType', [1, 'unknown_type']);
-    }
-
-    /**
-     * @covers Mobileka\ScopeApplicator\ScopeApplicator::parseScopeArguments
-     */
-    public function test_parses_scope_arguments()
-    {
-        foreach ($this->fixtures as $case => $fixture) {
-            list($inputManagerMock, $expectedResult) = $this->prepareData($case);
-            $repository = new Stubs\GoodRepository($inputManagerMock);
-
-            assertSame(
-                $expectedResult,
-                $this->invokeMethod($repository, 'parseScopeArguments', [$fixture['result']['scope']]),
-                'test_parses_scope_arguments:: ' . $case . ' has failed'
-            );
-        }
-    }
-
-    /**
-     * @param string $case
-     * @return array
-     */
-    protected function prepareData($case)
-    {
-        switch ($case) {
-            case 'firstCase':
-                $result = [
-                    Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface')
-                        ->shouldReceive('get')
-                        ->withArgs(['scope', null])
-                        ->once()
-                        ->andReturn('5')
-                        ->mock(),
-                    ['5']
-                ];
-                break;
-
-            case 'secondCase':
-                $result = [
-                    Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface')
-                        ->shouldReceive('get')
-                        ->withArgs(['scopeAlias', null])
-                        ->once()
-                        ->andReturn(['firstKey' => '5', 'secondKey' => '6'])
-                        ->mock(),
-                    [5, 6]
-                ];
-                break;
-
-            default:
-                $result = [
-                    Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface')
-                        ->shouldReceive('get')
-                        ->withArgs(['scope', null])
-                        ->once()
-                        ->andReturn(['6'])
-                        ->mock(),
-                    [false]
-                ];
-                break;
-        }
-
-        return $result;
     }
 
     public function tearDown()

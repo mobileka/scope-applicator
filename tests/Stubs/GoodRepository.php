@@ -1,14 +1,15 @@
 <?php namespace Stubs;
 
-use Mobileka\ScopeApplicator\InputManagerInterface;
+use Mobileka\ScopeApplicator\Contracts\InputManagerInterface;
 use Mobileka\ScopeApplicator\ScopeApplicator;
+use Stubs\Fake\Logger;
 
 class GoodRepository
 {
     use ScopeApplicator;
 
     /**
-     * @var \Mobileka\ScopeApplicator\InputManagerInterface
+     * @var InputManagerInterface
      */
     public $inputManager;
 
@@ -21,10 +22,18 @@ class GoodRepository
     }
 
     /**
-     * @return \Mobileka\ScopeApplicator\InputManagerInterface
+     * @return InputManagerInterface
      */
     public function getInputManager()
     {
         return $this->inputManager;
+    }
+
+    /**
+     * @return \Stubs\Fake\Logger
+     */
+    public function getLogger()
+    {
+        return new Logger;
     }
 }

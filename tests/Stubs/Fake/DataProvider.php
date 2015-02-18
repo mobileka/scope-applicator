@@ -4,6 +4,9 @@ use Mobileka\MosaicArray\MosaicArray;
 
 class DataProvider
 {
+    /**
+     * @var array|\Mobileka\MosaicArray\MosaicArray
+     */
     public $data = [
         'one' => ['val' => 1],
         'five' => ['val' => 5],
@@ -18,8 +21,8 @@ class DataProvider
     /**
      * A scope with an argument
      *
-     * @param  string             $one
-     * @return Current_Class_Name
+     * @param  string $one
+     * @return static
      */
     public function one($one)
     {
@@ -31,7 +34,7 @@ class DataProvider
     /**
      * A scope without arguments
      *
-     * @return Current_Class_Name
+     * @return static
      */
     public function five()
     {
@@ -43,8 +46,8 @@ class DataProvider
     /**
      * A scope with an optional argument
      *
-     * @param  string             $six
-     * @return Current_Class_Name
+     * @param  string $six
+     * @return static
      */
     public function six($six = 'six')
     {
@@ -56,9 +59,9 @@ class DataProvider
     /**
      * A scope with two arguments
      *
-     * @param  mixed              $min
-     * @param  mixed              $max
-     * @return Current_Class_Name
+     * @param  mixed $min
+     * @param  mixed $max
+     * @return static
      */
     public function between($min, $max)
     {
@@ -78,6 +81,9 @@ class DataProvider
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function get()
     {
         return $this->data->toArray();

@@ -11,6 +11,10 @@ class BadRepository
      */
     public function getInputManager()
     {
-        return \Mockery::mock('\Mobileka\MosaicHelpers\MosaicArray');
+        return \Mockery::mock('\Mobileka\MosaicArray\MosaicArray');
+    }
+
+    public function getLogger()
+    {
     }
 }

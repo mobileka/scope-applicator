@@ -1,9 +1,9 @@
-<?php namespace Mobileka\ScopeApplicator;
+<?php namespace Mobileka\ScopeApplicator\Contracts;
 
 interface InputManagerInterface
 {
     /**
-     * Return a value from POST or GET parameters by key
+     * Return a value from an array of Request parameters by key
      * If nothing found, return $defaultValue
      *
      * @param  string|null $key

@@ -13,4 +13,12 @@ abstract class Repository
     {
         return new InputManager;
     }
+
+    /**
+     * @return \Mobileka\ScopeApplicator\Contracts\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return new Logger;
+    }
 }

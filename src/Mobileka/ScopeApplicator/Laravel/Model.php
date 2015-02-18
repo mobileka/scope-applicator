@@ -16,17 +16,19 @@ abstract class Model extends Eloquent
     }
 
     /**
-     * @param string $method
-     * @param array  $parameters
+     * @return \Mobileka\ScopeApplicator\Contracts\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return new Logger;
+    }
+
+    /**
+     * @param  array $scopes
      * @return mixed
      */
-    public static function __callStatic($method, $parameters)
+    public static function handleScopes($scopes = [])
     {
-        if ($method === 'handleScopes') {
-            $method = 'applyScopes';
-            array_unshift($parameters, new static);
-        }
-
-        return parent::__callStatic($method, $parameters);
+        return parent::__callStatic('applyScopes', [new static, $scopes]);
     }
 }
