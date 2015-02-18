@@ -1,8 +1,8 @@
 <?php
 
-use Mobileka\MosaiqHelpers\MosaiqArray;
+use Mobileka\MosaicArray\MosaicArray;
 
-return MosaiqArray::make([
+return MosaicArray::make([
     // first case: plain scopes with no configuration
     'firstCase' => [
         'allowedScopes' => ['scope', 'anotherScope'],

@@ -11,7 +11,7 @@ class ScopeApplicatorTest extends BaseTestCase
     public function setUp()
     {
         $this->realRepository = new Stubs\RealRepository;
-        $this->fixtures = require __DIR__.'/Fixtures/fixtures.php';
+        $this->fixtures = require __DIR__ . '/Fixtures/fixtures.php';
     }
 
     /**
@@ -36,23 +36,27 @@ class ScopeApplicatorTest extends BaseTestCase
         // a scope with two arguments
         assertSame(
             array_slice($data, 1, null, true),
-            $repository->getFakeData([
-                'between' => [
-                    'keys' => ['min', 'max']
+            $repository->getFakeData(
+                [
+                    'between' => [
+                        'keys' => ['min', 'max']
+                    ]
                 ]
-            ])
+            )
         );
 
         // a scope with two arguments with allowed empty values
         assertSame(
             array_slice($data, 0, -1, true),
-            $repository->getFakeData([
-                'between' => [
-                    'alias' => 'between:empty',
-                    'keys' => ['min', 'max'],
-                    'allowEmpty' => true
+            $repository->getFakeData(
+                [
+                    'between' => [
+                        'alias' => 'between:empty',
+                        'keys' => ['min', 'max'],
+                        'allowEmpty' => true
+                    ]
                 ]
-            ])
+            )
         );
 
         // a scope with no arguments. See Stubs\Fake\DataProvider::five
@@ -99,7 +103,10 @@ class ScopeApplicatorTest extends BaseTestCase
         $repository = new Stubs\GoodRepository(Mockery::mock('Mobileka\ScopeApplicator\InputManagerInterface'));
 
         foreach ($this->fixtures as $fixture) {
-            assertEquals($fixture['result'], $this->invokeMethod($repository, 'parseScopeConfiguration', [$fixture['allowedScopes']]));
+            assertEquals(
+                $fixture['result'],
+                $this->invokeMethod($repository, 'parseScopeConfiguration', [$fixture['allowedScopes']])
+            );
         }
     }
 
@@ -140,6 +147,10 @@ class ScopeApplicatorTest extends BaseTestCase
         }
     }
 
+    /**
+     * @param string $case
+     * @return array
+     */
     protected function prepareData($case)
     {
         switch ($case) {

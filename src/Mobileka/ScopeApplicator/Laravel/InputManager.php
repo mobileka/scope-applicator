@@ -5,6 +5,9 @@ use Mobileka\ScopeApplicator\InputManagerInterface;
 
 class InputManager implements InputManagerInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
     public $inputManager;
 
     public function __construct()
@@ -12,6 +15,11 @@ class InputManager implements InputManagerInterface
         $this->inputManager = Request::createFromGlobals();
     }
 
+    /**
+     * @param null $key
+     * @param null $default
+     * @return mixed
+     */
     public function get($key = null, $default = null)
     {
         return $this->inputManager->query($key, $default);

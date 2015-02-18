@@ -1,17 +1,18 @@
 <?php namespace Mobileka\ScopeApplicator;
 
+use ErrorException;
 use Exception;
-use Mobileka\MosaiqHelpers\MosaiqArray;
+use Mobileka\MosaicArray\MosaicArray;
 
 /**
- * This trait allows us easly filter data based on named scopes in our models
+ * This trait allows us easily filter data based on named scopes in our models
  */
 trait ScopeApplicator
 {
     /**
      * Provide a way to get request parameters
      *
-     * @return Mobileka\ScopeApplicator\InputManagerInterface
+     * @return \Mobileka\ScopeApplicator\InputManagerInterface
      */
     abstract public function getInputManager();
 
@@ -20,13 +21,16 @@ trait ScopeApplicator
      *
      * @param  mixed $dataProvider
      * @param  array $allowedScopes
+     * @throws \Exception
      * @return mixed
      */
     public function applyScopes($dataProvider, $allowedScopes = [])
     {
         // Validate getInputManager() implementation
         if (!$this->validateInputManager()) {
-            throw new Exception('getInputManager() method must return an instance of a class which implements the InputManagerInterface');
+            throw new Exception(
+                'getInputManager() method must return an instance of a class which implements the InputManagerInterface'
+            );
         }
 
         // If there are no allowed scopes, just return the $dataProvider
@@ -40,8 +44,12 @@ trait ScopeApplicator
 
                 // If parseScopeArguments() returns null, we should ignore this scope
                 if (!is_null($scopeArguments)) {
-                    // Apply scopes
-                    $dataProvider = call_user_func_array([$dataProvider, $scope], $scopeArguments);
+                    try {
+                        // Apply scopes
+                        $dataProvider = call_user_func_array([$dataProvider, $scope], $scopeArguments);
+                    } catch (ErrorException $e) {
+                        //just ignore this scope
+                    }
                 }
             }
         }
@@ -62,7 +70,8 @@ trait ScopeApplicator
     /**
      * Parse scope configuration passed as a second argument for applyScopes method
      *
-     * @param  array $scope
+     * @param array $scopes
+     * @internal param array $scope
      * @return array
      */
     protected function parseScopeConfiguration(array $scopes)
@@ -82,7 +91,6 @@ trait ScopeApplicator
             if (!isset($scope['alias'])) {
                 $result[$key]['alias'] = $key;
             }
-
         }
 
         return $result;
@@ -96,7 +104,7 @@ trait ScopeApplicator
      */
     protected function parseScopeArguments(array $scope)
     {
-        $scope = MosaiqArray::make($scope);
+        $scope = new MosaicArray($scope);
         $result = [];
 
         // If "type" key is provided, we should typecast the result

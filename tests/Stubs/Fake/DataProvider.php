@@ -1,6 +1,6 @@
 <?php namespace Stubs\Fake;
 
-use Mobileka\MosaiqHelpers\MosaiqArray;
+use Mobileka\MosaicArray\MosaicArray;
 
 class DataProvider
 {
@@ -12,7 +12,7 @@ class DataProvider
 
     public function __construct()
     {
-        $this->data = new MosaiqArray($this->data);
+        $this->data = new MosaicArray($this->data);
     }
 
     /**

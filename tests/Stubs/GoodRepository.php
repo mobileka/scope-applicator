@@ -1,16 +1,28 @@
 <?php namespace Stubs;
 
+use Mobileka\ScopeApplicator\InputManagerInterface;
+use Mobileka\ScopeApplicator\ScopeApplicator;
+
 class GoodRepository
 {
-    use \Mobileka\ScopeApplicator\ScopeApplicator;
+    use ScopeApplicator;
 
+    /**
+     * @var \Mobileka\ScopeApplicator\InputManagerInterface
+     */
     public $inputManager;
 
-    public function __construct($manager)
+    /**
+     * @param $manager
+     */
+    public function __construct(InputManagerInterface $manager)
     {
         $this->inputManager = $manager;
     }
 
+    /**
+     * @return \Mobileka\ScopeApplicator\InputManagerInterface
+     */
     public function getInputManager()
     {
         return $this->inputManager;
