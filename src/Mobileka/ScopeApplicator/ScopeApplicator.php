@@ -5,7 +5,7 @@ use Mobileka\ScopeApplicator\Contracts\InputManagerInterface;
 use Mobileka\ScopeApplicator\Contracts\LoggerInterface;
 
 /**
- * Easily filter data based on named scopes in our models
+ * Easily filter data based on named scopes in models
  */
 trait ScopeApplicator
 {
