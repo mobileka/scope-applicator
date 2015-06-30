@@ -14,7 +14,7 @@ ScopeApplicator brings an elegant way to sort and filter data to your Laravel pr
     - [Default](#default)
     - [Allow Empty](#allow-empty)
     - [Keys (experimental)](#keys-experimental)
-- [A better usage (with Repositories)](#a-better-usage-with-repositories)
+- [A better usage scenario (with Repositories)](#a-better-usage-scenario-with-repositories)
 - [Other ways to use this trait](#other-ways-to-use-this-trait)
 - [Credits](#credits)
 - [Contributing](#contributing)
@@ -53,7 +53,7 @@ Let's learn by example. First of all, we'll implement an `author_id` filter for 
 These are steps required to achieve this:
 
 1. Create a basic `PostController` which outputs a list of posts when you hit `/posts` route
-2. Create a `userId` scope at the `Post` model (and it has to extend the `Mobileka\ScopeApplicator\Laravel\Model` class)
+2. Create a `userId` scope in the `Post` model (and it has to extend the `Mobileka\ScopeApplicator\Laravel\Model` class)
 3. Tell ScopeApplicator that this scope is available and give it an alias
 4. Visit `/posts?author_id=1` and enjoy the result
 
@@ -120,6 +120,8 @@ class PostController extends Controller
 }
 ```
 
+Take a note that `'userId'` matches the name of the scope we've created in the `Post` model (`scopeUserId`).
+
 At this moment you can add some dummy data to your `posts` table and make sure that you can filter it by hitting the following route:
 `/posts?userId=your_number`
 
@@ -153,7 +155,7 @@ class PostController extends Controller
 
 ## Configuration options
 
-Here's the list of all configuration options available:
+Here's a list of all configuration options available:
 
 #### Alias
 
@@ -167,17 +169,17 @@ public $scopes = [
 ];
 ```
 
-`/posts?order_by_title` – the `orderByTitle` scope will be applied
+`/posts?order_by_title` – an `orderByTitle` scope will be applied
 
 `/posts?orderByTitle` – no scope will be applied
 
 #### Type
 
-This option allows to cast a type of the parameter value before it will passed to a scope.
+This option allows to cast a type of a parameter value before it will passed to a scope.
 
-In the example from [Usage](#usage-with-models) section, we can tell ScopeAplicator to cast the `author_id` value to `int` before this value will be passed to `userId` scope. 
+In the example from [Usage](#usage-with-models) section, we can tell ScopeAplicator to cast `author_id` value to `int` before this value will be passed to `userId` scope. 
 
-When type is set to `bool` or `boolean`, only `1` and `true` will be converted to `true`. Everything else is considered  to be `false`.
+When type is set to `bool` or `boolean`, only `1` and `true` will be converted to `true`. Everything else is considered to be `false`.
 
 If `type` is set to something different than `bool` or `boolean`, `settype` php function will be called.
 
@@ -195,15 +197,15 @@ public $scopes = [
 ];
 ```
 
-`/posts?author_id=123sometext555` – the `userId` scope will be applied with integer `123` as an argument
+`/posts?author_id=123sometext555` – a `userId` scope will be applied with integer `123` as an argument
 
-`/posts?new=true` – the `new` scope will be applied with boolean `true` as its argument  
+`/posts?new=true` – a `new` scope will be applied with boolean `true` as its argument  
 
-`/posts?new=yes` – the `new` scope will be called with boolean `false` as its argument  
+`/posts?new=yes` – a `new` scope will be called with boolean `false` as its argument  
 
 #### Default
 
-When this option is set, a scope will be applied on every single request, even there are no query parameters in URL matching a scope name or alias.
+When this option is set, a scope will be applied on every single request, even when there are no query parameters in URL matching a scope name or alias.
 
 Examples:
 
@@ -216,9 +218,9 @@ public $scopes = [
 ];
 ```
 
-`/posts?author_id=1` - the `userId` scope will be applied with `1` as an argument  
+`/posts?author_id=1` - a `userId` scope will be applied with `1` as an argument  
 
-`/posts` - the `userId` scope will be applied with `5` as an argument
+`/posts` - a `userId` scope will be applied with `5` as an argument
 
 #### Allow Empty
 
@@ -235,9 +237,9 @@ public $scopes = [
 ];
 ```
 
-`/posts?author_id` – the `userId` scope will be applied with `''` (empty string) as an argument.
+`/posts?author_id` – a `userId` scope will be applied with `''` (empty string) as an argument.
 
-> Please not that when `allowEmpty` is set to `false` (what is the default behavior), you always have to provide a default value for the scope argument (see an example from the [Usage](#usage-with-models) section where the `$param` argument of the `userId` scope has a default value set to `0`). Otherwise, the "Missing argument" exception will be thrown when `/posts?author_id` route is being hit
+> Please note that when `allowEmpty` is set to `false` (what is a default behavior), you always have to provide a default value for the scope argument (see an example from the [Usage](#usage-with-models) section where the `$param` argument of the `userId` scope has a default value set to `0`). Otherwise, the "Missing argument" exception will be thrown when `/posts?author_id` route is being hit.
 
 > Also note that when `allowEmpty` is set to `true`, a default value of a scope argument will be ignored and an empty string will be passed instead.
 
@@ -257,20 +259,19 @@ public $scopes = [
 ];
 ```
 
-`/posts?created_at[from]=000-00-00&created_at[to]=2014-07-23` – the `createdAt` scope will be applied with `'0000-00-00'` as the first argument and `'2014-07-23'` as a second argument
+`/posts?created_at[from]=000-00-00&created_at[to]=2014-07-23` – a `createdAt` scope will be applied with `'0000-00-00'` as a first argument and `'2014-07-23'` as a second
 
-> Please note that I don't recommend using this right now as it is an experimental feature. Create two separate scopes instead (`createdAtFrom` and `createAtTo`) until this feature is marked as "stable".
+> Please note that I don't recommend using this right now as it's an experimental feature. Create two separate scopes instead (`createdAtFrom` and `createAtTo`) until this feature is marked as "stable".
 
-## A better usage (with Repositories)
+## A better usage scenario (with Repositories)
 
 ScopeApplicator can also be used with [Repositories](http://blog.armen.im/laravel-and-repository-pattern). It was actually designed to be used this way.
-
 
 To achieve this, your repository has to extend the `Mobileka\ScopeApplicator\Laravel\Repository` class.
 
 The ScopeApplicator is already attached to this class, so you'll have a new `applyScopes()` method available in repositories extending it.
 
-Let's see an example `BaseRepository` *before* we extend the mentioned above class:
+Let's see an example `BaseRepository` *before* we extend the aforementioned class:
 
 ```php
 <?php namespace Acme\Repositories;
@@ -321,6 +322,7 @@ class BaseRepository extends Repository
     
     public function all($scopes = [])
     {
+        // This part has to be noticed!
         return $this->applyScopes($this->getDataProvider(), $scopes)->get();
     }
 }
@@ -328,19 +330,19 @@ class BaseRepository extends Repository
 
 Pay closer attention to `all` method. Now it accepts an array of scopes (the same array we were passing to `Model::handleScopes()`).
 
-Instead of directly calling `all` on our DataProvider, we now use the `applyScopes()` which accepts the DataProvider instance as a first argument and an array of scope configuration as the second.
+Instead of directly calling `all` on our DataProvider, we now use `applyScopes()` method which accepts a `DataProvider` instance as a first argument and a scope configuration array as a second.
 
 ## Other ways to use this trait
 
-As described above, the main usage scenario of the ScopeApplicatior is, well, applying scopes for data filtering purposes.
+As described above, the main usage scenario of ScopeApplicatior is, well, applying scopes for data filtering purposes.
 
-But this trait just parses the URL query parameters and calls methods of the class which is provided as the first argument of the `applyScopes` method. In fact, it's possible to change the way it behaves: for example, it can call methods returned by a database query or an API call.
+But all this trait does is just parses URL query parameters and calls methods of a class which is provided as a first argument of `applyScopes` method. In fact, it's possible to change the way it behaves: for example, it can call methods returned by a database query or an API call.
 
-To do this, you just have to override the `getInputManager` method of the class ScopeApplicator is attached to and return an instance of a custom class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. An example of a such class is `Mobileka\ScopeApplicator\InputManagers\LaravelInputManager`.
+To do this, you just have to override the `getInputManager` method of a class ScopeApplicator is attached to and return an instance of a custom class which implements the `Mobileka\ScopeApplicator\InputManagerInterface`. An example of a such class is `Mobileka\ScopeApplicator\InputManagers\LaravelInputManager`.
 
 ## Credits
 
-Scope Applicator is inspired by the [has_scope](https://github.com/plataformatec/has_scope) Ruby gem. 
+Scope Applicator is inspired by [has_scope](https://github.com/plataformatec/has_scope) Ruby gem. 
 
 ## Contributing
 
