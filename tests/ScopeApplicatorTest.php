@@ -160,6 +160,17 @@ class ScopeApplicatorTest extends BaseTestCase
 
     /**
      * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
+     * @test
+     * @expectedException \ErrorException
+     */
+    public function throws_error_exception()
+    {
+        $repository = new Stubs\Fake\Repository;
+        $repository->getFakeData(['error']);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
      * @expectedException Mobileka\ScopeApplicator\BadInputManagerException
      * @test
      */

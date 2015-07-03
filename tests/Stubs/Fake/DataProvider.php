@@ -82,6 +82,15 @@ class DataProvider
     }
 
     /**
+     * @throws \ErrorException
+     * @return float
+     */
+    public function error()
+    {
+        throw new \ErrorException;
+    }
+
+    /**
      * @return array
      */
     public function get()

@@ -7,6 +7,7 @@ class Logger implements LoggerInterface
 {
     /**
      * @param string $message
+     * @codeCoverageIgnore
      */
     public function log($message)
     {

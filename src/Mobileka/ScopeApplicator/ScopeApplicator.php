@@ -35,7 +35,8 @@ trait ScopeApplicator
      *
      * @param  mixed $dataProvider
      * @param  array $allowedScopes
-     * @throws BadInputManagerException
+     * @throws \ErrorException
+     * @throws \Mobileka\ScopeApplicator\BadInputManagerException
      * @return mixed
      */
     public function applyScopes($dataProvider, array $allowedScopes = [])
@@ -53,12 +54,13 @@ trait ScopeApplicator
             foreach ($scopes as $scope => $config) {
                 $scopeArguments = $configurator->parseScopeArguments($config);
 
-                // If null, we should ignore this scope
+                // If null, we have to ignore this scope
                 if (!is_null($scopeArguments)) {
                     try {
                         $dataProvider = call_user_func_array([$dataProvider, $scope], $scopeArguments);
                     } catch (ErrorException $e) {
                         $this->getLogger()->log($e);
+                        throw $e;
                     }
                 }
             }

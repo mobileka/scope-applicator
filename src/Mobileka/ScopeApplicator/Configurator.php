@@ -43,7 +43,7 @@ class Configurator
         $result = [];
 
         foreach ($this->scopes as $key => $scope) {
-            // If no scope configuration has been provided, just make the scope name to be it's alias
+            // If no scope configuration has been provided, just make scope's name to be its alias
             if (!is_array($scope)) {
                 $result[$scope] = ['alias' => $scope];
                 continue;
@@ -51,7 +51,7 @@ class Configurator
 
             $result[$key] = $scope;
 
-            // If no alias provided, make it to be the scope's name
+            // If no alias has been provided, make it to be scope's name
             if (!isset($scope['alias'])) {
                 $result[$key]['alias'] = $key;
             }
@@ -71,7 +71,7 @@ class Configurator
         $scope = new MosaicArray($scope);
         $result = [];
 
-        // If "type" key is provided, we should typecast the result
+        // If "type" key has been provided, we have to typecast the result
         $type = $scope->getItem('type');
 
         // Get default scope argument value
@@ -87,10 +87,10 @@ class Configurator
             return $default ? [$default] : null;
         }
 
-        // If "keys" configuration key is provided, we are dealing with an array parameter (e.g. <input name="somename[somekey]">)
+        // If "keys" configuration key has been provided, we are dealing with an array parameter (e.g. <input name="somename[somekey]">)
         $keys = $scope->getItem('keys');
 
-        // If "keys" are empty, we need to perform some DRY actions
+        // If "keys" are empty, we have to perform some DRY actions
         if (is_null($keys)) {
             $keys = ['default'];
             $value = ['default' => $value];
@@ -99,8 +99,8 @@ class Configurator
         foreach ((array) $keys as $key) {
             $arg = $this->setType($value[$key], $type);
 
-            // Empty arguments are not allowed by default to allow default scope argument values
-            // Set allowEmpty option to true if you want to change this behavior
+            // Empty arguments are not allowed by default in order to allow default scope argument values
+            // Set allowEmpty option to `true` if you want to change this behavior
             if ($arg !== '' or $scope->getItem('allowEmpty')) {
                 $result[] = $arg;
             }
@@ -110,7 +110,7 @@ class Configurator
     }
 
     /**
-     * Convert a provided variable to a provided type
+     * Typecast a variable
      *
      * @param  mixed       $variable
      * @param  string|null $type

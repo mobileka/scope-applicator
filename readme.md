@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/mobileka/scope-applicator.svg)](https://travis-ci.org/mobileka/scope-applicator)
-[![Code Climate](https://codeclimate.com/github/mobileka/scope-applicator.png)](https://codeclimate.com/github/mobileka/scope-applicator)
-[![Coverage Status](https://coveralls.io/repos/mobileka/scope-applicator/badge.png?branch=master)](https://coveralls.io/r/mobileka/scope-applicator?branch=master)
+[![Code Climate](https://codeclimate.com/github/mobileka/scope-applicator.svg)](https://codeclimate.com/github/mobileka/scope-applicator)
+[![Coverage Status](https://coveralls.io/repos/mobileka/scope-applicator/badge.svg?branch=master)](https://coveralls.io/r/mobileka/scope-applicator?branch=master)
 
 ScopeApplicator brings an elegant way to sort and filter data to your Laravel projects.
 

@@ -24,7 +24,7 @@ class ConfiguratorTest extends BaseTestCase
      */
     public function getInstance($manager = null, $scopes = [])
     {
-        $manager = $manager ? : Mockery::mock('Mobileka\ScopeApplicator\Contracts\InputManagerInterface');
+        $manager = $manager ?: Mockery::mock('Mobileka\ScopeApplicator\Contracts\InputManagerInterface');
 
         return $configurator = new Configurator(
             $manager,
@@ -146,6 +146,32 @@ class ConfiguratorTest extends BaseTestCase
         );
 
         assertSame([false], $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\Configurator::parseScopeArguments
+     * @test
+     */
+    public function ignores_scope_names_which_return_null_from_input_manager()
+    {
+        $configurator = $this->getInstance($this->getInputManagerMock(['scope'], null));
+
+        $result = $configurator->parseScopeArguments(['alias' => 'scope']);
+
+        assertSame(null, $result);
+    }
+
+    /**
+     * @covers Mobileka\ScopeApplicator\Configurator::parseScopeArguments
+     * @test
+     */
+    public function returns_default_value_if_scope_name_returns_null_from_input_manager()
+    {
+        $configurator = $this->getInstance($this->getInputManagerMock(['scope'], null));
+
+        $result = $configurator->parseScopeArguments(['alias' => 'scope', 'default' => 5]);
+
+        assertSame([5], $result);
     }
 
     /**

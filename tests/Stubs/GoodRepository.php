@@ -11,7 +11,7 @@ class GoodRepository
     /**
      * @var InputManagerInterface
      */
-    public $inputManager;
+    protected $inputManager;
 
     /**
      * @param $manager

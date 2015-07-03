@@ -21,6 +21,7 @@ class InputManager implements InputManagerInterface
 
             case 'five':
             case 'six:default':
+            case 'error':
                 return '';
 
             default:
