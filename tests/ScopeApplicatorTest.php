@@ -6,11 +6,6 @@
 class ScopeApplicatorTest extends BaseTestCase
 {
     /**
-     * @var Stubs\RealRepository
-     */
-    protected $realRepository;
-
-    /**
      * @var array
      */
     protected $testData = [
@@ -18,11 +13,6 @@ class ScopeApplicatorTest extends BaseTestCase
         'five' => ['val' => 5],
         'six' => ['val' => 6],
     ];
-
-    public function setUp()
-    {
-        $this->realRepository = new Stubs\RealRepository;
-    }
 
     /**
      * @covers Mobileka\ScopeApplicator\ScopeApplicator::applyScopes
@@ -189,7 +179,6 @@ class ScopeApplicatorTest extends BaseTestCase
         $goodRepository = new Stubs\GoodRepository(Mockery::mock('Mobileka\ScopeApplicator\Contracts\InputManagerInterface'));
         $badRepository = new Stubs\BadRepository;
 
-        assertTrue($this->invokeMethod($this->realRepository, 'validateInputManager'));
         assertTrue($this->invokeMethod($goodRepository, 'validateInputManager'));
         assertFalse($this->invokeMethod($badRepository, 'validateInputManager'));
     }
