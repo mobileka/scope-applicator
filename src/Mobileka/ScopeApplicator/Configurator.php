@@ -84,7 +84,7 @@ class Configurator
         // 1) in a case when no default value is set, return null to ignore this scope
         // 2) if default value is set, return it
         if (is_null($value)) {
-            return $default ? [$default] : null;
+            return !is_null($default) ? [$default] : null;
         }
 
         // If "keys" configuration key has been provided, we are dealing with an array parameter (e.g. <input name="somename[somekey]">)

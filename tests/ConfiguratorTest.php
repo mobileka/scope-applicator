@@ -175,6 +175,19 @@ class ConfiguratorTest extends BaseTestCase
     }
 
     /**
+     * @covers Mobileka\ScopeApplicator\Configurator::parseScopeArguments
+     * @test
+     */
+    public function returns_default_value_even_if_its_falsy()
+    {
+        $configurator = $this->getInstance($this->getInputManagerMock(['scope'], null));
+
+        $result = $configurator->parseScopeArguments(['alias' => 'scope', 'default' => 0]);
+
+        assertSame([0], $result);
+    }
+
+    /**
      * @param array $args
      * @param mixed $return
      * @return mixed
