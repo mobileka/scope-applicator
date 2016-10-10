@@ -37,7 +37,7 @@ ScopeApplicator is an easy, logical and framework-agnostic way to achieve someth
 
 ## Supported frameworks:
 
-* [Laravel 5.1.x](https://github.com/mobileka/scope-applicator-laravel) ([documentation](https://github.com/mobileka/scope-applicator-laravel/blob/master/readme.md))
+* [Laravel ~5.1](https://github.com/mobileka/scope-applicator-laravel) ([documentation](https://github.com/mobileka/scope-applicator-laravel/blob/master/readme.md))
 * [Laravel 5.0.x](https://github.com/mobileka/scope-applicator-laravel/tree/laravel_4_and_5.0) ([documentation](https://github.com/mobileka/scope-applicator-laravel/blob/laravel_4_and_5.0/readme.md))
 * [Laravel 4.x.x](https://github.com/mobileka/scope-applicator-laravel/tree/laravel_4_and_5.0) ([documentation](https://github.com/mobileka/scope-applicator-laravel/blob/laravel_4_and_5.0/readme.md))
 * [Laravel 3.x.x](https://github.com/mobileka/scope-applicator-laravel/tree/laravel_4_and_5.0) ([documentation](https://github.com/mobileka/scope-applicator-laravel/blob/laravel_4_and_5.0/readme.md))
